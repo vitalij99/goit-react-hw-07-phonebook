@@ -13,9 +13,12 @@ import {
 } from 'redux/contacts/thunk';
 import { createFilter } from 'redux/contacts/contactsReducer';
 import { useEffect } from 'react';
+import { ColorRing } from 'react-loader-spinner';
 
 export const App = () => {
-  const { items: contacts } = useSelector(state => state.contacts.contacts);
+  const { items: contacts, isLoading } = useSelector(
+    state => state.contacts.contacts
+  );
   const { FiltersList } = useSelector(state => state.contacts);
   const dispatch = useDispatch();
 
@@ -62,6 +65,21 @@ export const App = () => {
 
   return (
     <>
+      <>
+        <ColorRing
+          visible={isLoading}
+          height="80"
+          width="80"
+          ariaLabel="blocks-loading"
+          wrapperStyle={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+          colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+        />
+      </>
       <Section title="Phonebook">
         <ContactForm onSubmit={addContact} />
       </Section>
